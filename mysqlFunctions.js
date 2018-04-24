@@ -24,7 +24,7 @@ exports.Login = function Login(username,password,callback){
 }
 
 exports.getFormByID = function getFormByID(id,callback){
-	con.query("select * from form where User_ID ='" +id + "'",function(err,rows){
+	con.query("select f.*,u.Name from form f left join users u on u.ID = f.User_ID where f.User_ID ='" +id + "'",function(err,rows){
         var result =  {'data':rows};
         callback(null,result);
 	});
@@ -59,7 +59,7 @@ exports.studentSubmitForm = function studentSubmitForm(id,point1,point2,point3,c
 }
 
 function updateForm(id,callback){
-	con.query("select f.*,u.Name from form f left join users u on u.ID = f.User_ID where u.ID = '"+id+"'",function(err,rows){
+	con.query("Select * from form where User_ID = '"+id+"';",function(err,rows){
 		result =  {'status':rows};
 		callback(null,result);
 	});
