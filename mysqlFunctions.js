@@ -53,7 +53,7 @@ exports.studentSubmitForm = function studentSubmitForm(id,point1,point2,point3,c
 }
 
 function updateForm(id,callback){
-	con.query("select f.*,u.Name from form f left join users u on u.ID = f.User_ID where u.ID = '"+id+"';",function(err,rows){
+	con.query("Select * from form where User_ID = '"+id+"';",function(err,rows){
 		result =  {'status':rows};
 		callback(null,result);
 	});
