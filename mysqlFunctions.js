@@ -24,9 +24,10 @@ exports.Login = function Login(username,password,callback){
 }
 
 exports.getFormByID = function getFormByID(id,callback){
-	con.query("select f.*,u.Name from form f left join users u on u.ID = f.User_ID where f.User_ID ='" +id + "'",function(err,rows){
-        var result =  {'data':rows};
-        callback(null,result);
+	con.query("select f.*,u.Name from form f left join users u on u.ID = f.User_ID where u.ID = '"+id+"';",function(err,rows){
+		console.log(rows);
+		result =  {'status':rows};
+		callback(null,result);
 	});
 }
 
@@ -42,13 +43,6 @@ function sendAllForm(callback){
 		callback(null,result);
 	});
 } 
-
-exports.getFormByID = function getFormByID(id,callback){
-	con.query("select * from form where User_ID ='" +id + "'",function(err,rows){
-        var result =  {'data':rows};
-        callback(null,result);
-	});
-}
 
 exports.studentSubmitForm = function studentSubmitForm(id,point1,point2,point3,callback){
     con.query("UPDATE `soa2`.`form` SET `Point1`='"+point1+"', `Point2`='"+point2+"', `Point3`='"+point3+"', `student_verify`='1' ,`monitor_verify` = '0', `teacher_verify` = '0' WHERE `User_ID`='"+id+"';",function(err,rows){
